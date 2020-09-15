@@ -1,0 +1,9 @@
+Game window instructions
+
+Regardless of whether you are in stereo camera or mono camera mode, set the size of the game window to the desired output resolution.
+
+If you use stereo mode, set the game screen size to 16:18 and check that the field Server>AIManager>NumberCameras is 2.
+
+If you use mono mode, set the window to 16:9 and check that the field Server>AIManager>NumberCameras is 1.
+
+To view the resolution of the game screen, select the "Stats" option.
