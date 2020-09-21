@@ -27,7 +27,7 @@ public class AIManager : ServerUser
     {
         _numberCameras = BitConverter.GetBytes(numberCameras);
         _decimalAccuracy = BitConverter.GetBytes(decimalAccuracy);
-        StartCoroutine(GetState());
+        StartCoroutine(AIBehavior());
     }
 
     public override void Receive_msg(string msg)
@@ -56,15 +56,15 @@ public class AIManager : ServerUser
     }
 
     /*
-     Collects the current status of the simulation and stores it in the data queue that is sent to the client
+     If there is any pending action, collects the current status of the simulation and stores it in the data queue that is sent to the client
          */
-    private IEnumerator GetState()
+    private IEnumerator AIBehavior()
     {
         while (true)
         {
             if (actionsQueue.Count > 0)
             {
-                receivedData = actionsQueue.Dequeue();//<-- Do something with this.
+                AIDo();
                 yield return new WaitForEndOfFrame();
                 byte[] imageWidth = BitConverter.GetBytes(Screen.width);
                 byte[] imageHeight = BitConverter.GetBytes(Screen.height);
@@ -77,5 +77,13 @@ public class AIManager : ServerUser
             }
             yield return null;
         }
+    }
+
+    /*
+     Performs the action received
+     */
+    private void AIDo()
+    {
+        receivedData = actionsQueue.Dequeue();
     }
  }
