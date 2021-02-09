@@ -222,7 +222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _port: 12345
-  _ip_address: 192.168.1.1
+  _ip_address: 192.168.1.93
   _serverUser: {fileID: 606639546}
   raiseServer: 0
   establishedConnection: 0

@@ -14,14 +14,14 @@ internal class Server : MonoBehaviour
     public string _ip_address = "192.168.1.1";
     public ServerUser _serverUser;
     public bool raiseServer = false;
-    public bool establishedConnection = false;
 
+    private bool connectionEstablished = false;
     private static bool isShutdown = false;
     private static Socket clientSocket;
 
     private void Update()
     {
-        if (!establishedConnection && raiseServer)
+        if (!connectionEstablished && raiseServer)
         {
             BuildServer();
             StartServer();
@@ -42,7 +42,7 @@ internal class Server : MonoBehaviour
             listener.Bind(localEndPoint);
             listener.Listen(50);
             clientSocket = listener.Accept();
-            establishedConnection = true;
+            connectionEstablished = true;
         }
         catch (Exception e)
         {

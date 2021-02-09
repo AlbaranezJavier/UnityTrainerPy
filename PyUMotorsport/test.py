@@ -6,6 +6,7 @@ from myTools.my_client import bind2server
 if __name__ == '__main__':
     # Link is established with the server
     mySocket = bind2server()
+    msg_size, channels, parameters_size = 8, 3, 29
 
     # Message format [imageWidth, imageHeigth, numberofCameras, decimalAccuracy, throttle, speed, steer, brake, image]
     index = [4, 8, 12, 16, 20, 24, 28, 29]
@@ -14,7 +15,16 @@ if __name__ == '__main__':
     try:
         mySocket.sendall("ready".encode())
         while True:
-            msg = mySocket.recv(8388608)
+            # Message reconstruction
+            msg = mySocket.recv(msg_size)
+            imageWidth = int.from_bytes(msg[:index[0]], byteorder='little', signed=False)
+            imageHeigth = int.from_bytes(msg[index[0]:index[1]], byteorder='little', signed=False)
+            sum = msg_size
+            tam = imageWidth * imageHeigth * channels + parameters_size
+            while sum < tam:
+                data = mySocket.recv(tam)
+                sum += len(data)
+                msg = b"".join([msg, data])
 
             # Message content
             imageWidth = int.from_bytes(msg[:index[0]], byteorder='little', signed=False)
