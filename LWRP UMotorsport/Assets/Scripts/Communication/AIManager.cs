@@ -4,6 +4,7 @@ using System.Collections.Concurrent;
 using System.Collections;
 using System;
 using System.Linq;
+using System.Globalization;
 
 
 /*
@@ -21,6 +22,7 @@ public class AIManager : ServerUser
 
     private byte[] _numberCameras;
     private byte[] _decimalAccuracy;
+    private CultureInfo culture = new CultureInfo("en-EN");
     #endregion
 
     public void Start()
@@ -80,10 +82,17 @@ public class AIManager : ServerUser
     }
 
     /*
-     Performs the action received
+     Performs the action received, the data could be [throttle (0,1), brake(0,1), steer(-1,1)]
      */
     private void AIDo()
     {
         receivedData = actionsQueue.Dequeue();
+        if (receivedData.Equals("ready"))
+        {
+            telemetryCar.AIGetControl = true;
+        }
+        else {
+            telemetryCar.newAIAction(Array.ConvertAll(receivedData.Split(' '), i => float.Parse(i, CultureInfo.InvariantCulture)));
+        }
     }
  }

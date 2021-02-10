@@ -56,7 +56,6 @@ internal class Server : MonoBehaviour
          */
     private void ReceiveMsg(string data, byte[] bytes, int numByte, Socket clientSocket)
     {
-        
         data += Encoding.ASCII.GetString(bytes, 0, numByte);
         if (data.Equals(""))
             Shutdown(clientSocket);

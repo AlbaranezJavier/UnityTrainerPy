@@ -744,6 +744,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7134bee9c9df2144ebf38de4119f5582, type: 3}
+--- !u!114 &1936240211 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3171242315328112281, guid: 7134bee9c9df2144ebf38de4119f5582,
+    type: 3}
+  m_PrefabInstance: {fileID: 1936240210}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8422cfaaa8adde419c8079c3ee22ff5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &390348280883049004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -756,7 +768,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c010757b7667ce47a284e0416eba41f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  telemetryCar: {fileID: 0}
+  telemetryCar: {fileID: 1936240211}
   numberCameras: 2
   decimalAccuracy: 1000
   receivedData: 
@@ -808,7 +820,6 @@ MonoBehaviour:
   _ip_address: 192.168.1.93
   _serverUser: {fileID: 390348280883049004}
   raiseServer: 0
-  establishedConnection: 0
 --- !u!1 &634920454247309784
 GameObject:
   m_ObjectHideFlags: 0

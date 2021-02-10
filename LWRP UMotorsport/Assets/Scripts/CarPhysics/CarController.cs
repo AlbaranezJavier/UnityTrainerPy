@@ -22,7 +22,9 @@ public class CarController : MonoBehaviour
     public float throttle;
     public float speed;
     public float steer;
-    public bool brake;
+    public float brake;
+    // AI Control
+    public bool AIGetControl;
 
     /*
     Fix wheel position with the wheel collider
@@ -46,16 +48,21 @@ public class CarController : MonoBehaviour
 
     public void Update()
     {
+        // Actuators
+        if (!AIGetControl)
+        {
+            throttle = Input.GetAxis("Vertical");
+            steer = Input.GetAxis("Horizontal");
+            brake = Input.GetKey(KeyCode.Space) ? 1 : 0;
+        }
+
         // Telemetry
-        throttle = Input.GetAxis("Vertical");
-        steer = Input.GetAxis("Horizontal");
-        brake = Input.GetKey(KeyCode.Space);
         speed = car.velocity.magnitude * 3.6f;
 
         // Turn on the brake lights
         foreach (GameObject tl in tailLights)
         {
-            tl.GetComponent<Renderer>().material.SetColor("_EmissionColor", brake ? new Color(0.5f, 0.111f, 0.111f) : Color.black);
+            tl.GetComponent<Renderer>().material.SetColor("_EmissionColor", brake > 0 ? new Color(0.5f, 0.111f, 0.111f) : Color.black);
         }
     }
 
@@ -63,7 +70,7 @@ public class CarController : MonoBehaviour
     {
         float motorTorque = maxMotorTorque * throttle;
         float steering = maxSteeringAngle * steer;
-        float brakeTorque = maxBrakeTorque * (brake ? 1 : 0);
+        float brakeTorque = maxBrakeTorque * brake;
 
         // Manages the car's acceleration and braking
         foreach (WheelCollider wheel in motorWheels)
@@ -80,5 +87,15 @@ public class CarController : MonoBehaviour
             wheel.brakeTorque = brakeTorque;
             ApplyLocalPositionToVisuals(wheel);
         }
+    }
+
+    /*
+     Update de action of the AI, where actions = [throttle, brake, steer]
+         */
+    public void newAIAction(float[] actions)
+    {
+        throttle = actions[0];
+        brake = actions[1];
+        steer = actions[2];
     }
 }
